@@ -8,7 +8,8 @@ const storage = multer.diskStorage({
       cb(null, path.resolve(__dirname,"../public/imgs/avatar") )
     },
     filename: function (req, file, cb) {
-        console.log(req.body,file,"上传");
+      // 解决中文乱码问题
+      file.originalname = Buffer.from(file.originalname,"latin1").toString("utf-8")
       const uniqueSuffix = Date.now() + '-' + file.originalname;
       cb(null,  uniqueSuffix)
     }
